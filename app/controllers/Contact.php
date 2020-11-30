@@ -1,58 +1,66 @@
 <?php
 
-class Contact extends Controller {
+class Contact extends Controller
+{
 
-   
+
     // Index of the home page (localhost/home(/index))
-    public function index($param1= '', $param2= '', $param3= '') {
-        
+    public function index($param1 = '', $param2 = '', $param3 = '', $param4 = '', $param5 = '')
+    {
+
         // Initialize Alunos model
-        $test = $this->model('Alunos');
+        $test = $this->model('Clientes');
 
         // Call function from the model
-        $testData = $test->getAlunosFunction();
+        $testData = $test->getClientesFunction();
 
-        $this->view('contact/index', ['alunos' => $testData]);
+        $this->view('contact/index', ['clientes' => $testData]);
     }
-    public function teste($param1= '', $param2= '', $param3= ''){
-        $test = $this->model('Alunos');
-        $alunos = $test->getAlunosForName($param2);
-        $this->view('contact/index', ['alunos' => $alunos]);
+    public function teste($param1 = '', $param2 = '', $param3 = '', $param4 = '', $param5 = '')
+    {
+        $test = $this->model('Clientes');
+        $clientes = $test->getClientesForName($param2);
+        $this->view('contact/index', ['clientes' => $clientes]);
     }
-    public function aluno($id){
-        $aluno = $this->model('Alunos');
-        $valor = $aluno->getAlunoForId($id);
+    public function cliente($id)
+    {
+        $cliente = $this->model('Clientes');
+        $valor = $cliente->getClienteForId($id);
         return $valor;
     }
-    public function adicionaAluno(){
+    public function adicionaCliente()
+    {
         $nome = $_POST["nome"];
-        $idade = $_POST["idade"];
-        $aluno = $this->model('Alunos');
-       if($aluno->createAluno([$nome,$idade]))
-       echo "cadastro executado com sucesso!!";
+        $email = $_POST["email"];
+        $telefone = $_POST["telefone"];
+        $mensagem = $_POST["mensagem"];
+        $cliente = $this->model('Clientes');
+        if ($cliente->createCliente([$nome, $email, $telefone, $mensagem]))
+            echo "Cadastro executado com sucesso!!";
     }
-    public function alteraAluno(){
+    public function alteraCliente()
+    {
         $id = $_POST["id"];
         $nome = $_POST["nome"];
-        $idade = $_POST["idade"];
+        $email = $_POST["email"];
+        $telefone = $_POST["telefone"];
+        $mensagem = $_POST["mensagem"];
 
-        $aluno = $this->model('Alunos');
-       if($aluno->alterAluno([$nome,$idade,$id]))
-       echo "cadastro alterado com sucesso!!";
+        $cliente = $this->model('Clientes');
+        if ($cliente->alterCliente([$nome, $email, $telefone, $mensagem, $id]))
+            echo "Cadastro alterado com sucesso!!";
     }
 
-    public function  formAlter($param1= '', $param2= '', $param3= ''){
-        $aluno = $this->aluno($param2);
-        $this->view('contact/form2', ['aluno' => $aluno[0]]);
-        
+    public function  formAlter($param1 = '', $param2 = '', $param3 = '', $param4 = '', $param5 = '')
+    {
+        $cliente = $this->cliente($param2);
+        $this->view('contact/form2', ['cliente' => $cliente[0]]);
     }
-    public function deleteAluno($param1= '', $param2= '', $param3= ''){
+    public function deleteCliente($param1 = '', $param2 = '', $param3 = '', $param4 = '', $param5 = '')
+    {
         $id = $param2;
-        $aluno = $this->model('Alunos');
-       if($aluno->deleteAluno([$id]))
-       echo "cadastro excluido com sucesso!!";
-        
+        $cliente = $this->model('Clientes');
+        if ($cliente->deleteCliente([$id]))
+            echo "Cadastro excluido com sucesso!!";
     }
 }
-
-?>
